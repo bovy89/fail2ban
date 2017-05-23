@@ -1,0 +1,20 @@
+# This file is managed by Puppet. DO NOT EDIT.
+#
+[INCLUDES]
+
+<% if @filterbefore -%>
+before = <%= @filterbefore %>
+<% end -%>
+<% if @filterafter -%>
+after = <%= @filterafter %>
+<% end -%>
+
+[Definition]
+
+failregex = <%= @filterfailregex.join("\n\t") %>
+ignoreregex = <%= @filterignoreregex.join("\n\t") %>
+
+<% if @filterdefinitionvars != [] -%>
+<%= @filterdefinitionvars.join("\n") %>
+<% end -%>
+

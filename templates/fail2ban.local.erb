@@ -1,0 +1,10 @@
+# This file is managed by Puppet. DO NOT EDIT.
+#
+[Definition]
+
+<% if @log_level -%>
+loglevel = <%= @log_level %>
+<% end -%>
+<% if @log_target -%>
+logtarget = <%= @log_target %>
+<% end -%>

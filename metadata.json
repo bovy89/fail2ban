@@ -1,0 +1,28 @@
+{
+  "name": "bovy89-fail2ban",
+  "version": "1.0.0",
+  "author": "bovy89",
+  "summary": "This module manages fail2ban",
+  "license": "Apache-2.0",
+  "source": "https://github.com/bovy89/fail2ban",
+  "issues_url": "https://github.com/bovy89/fail2ban/issues",
+  "project_page": "https://github.com/bovy89/fail2ban",
+  "tags": ["fail2ban"],
+  "operatingsystem_support": [
+    {
+    "operatingsystem":"RedHat",
+    "operatingsystemrelease":[ "6", "7" ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">=2.7.20 <5.0.0"
+    }
+  ],
+  "dependencies": [
+    { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.1.0" },
+    { "name": "puppetlabs/concat", "version_requirement": ">= 1.0.0 <= 2.2.1" }
+  ]
+
+}
