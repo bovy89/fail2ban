@@ -8,11 +8,12 @@ begin
 rescue
 end
 
-exclude_paths = [
-  "pkg/**/*",
-  "vendor/**/*",
-  "spec/**/*",
-]
+exclude_paths = %w(
+  pkg/**/*
+  vendor/**/*
+  .vendor/**/*
+  spec/**/*
+)
 
 PuppetLint.configuration.log_format = "%{path}:%{linenumber}:%{check}:%{KIND}:%{message}"
 PuppetLint.configuration.fail_on_warnings = true
