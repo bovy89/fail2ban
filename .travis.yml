@@ -1,4 +1,6 @@
+cache: bundler
 language: ruby
+sudo: false
 bundler_args: --without system_tests development
 before_install:
 - bundle -v
@@ -7,9 +9,7 @@ before_install:
 - gem update bundler
 - gem --version
 - bundle -v
-script: "bundle install && bundle exec rake spec_clean && bundle exec rake validate && bundle exec rake test"
-cache: bundler
-sudo: false
+script: "bundle exec rake spec_clean && bundle exec rake validate && bundle exec rake test"
 matrix:
   fast_finish: true
   include:
@@ -17,11 +17,9 @@ matrix:
     env: PUPPET_GEM_VERSION="3.8.7" STRICT_VARIABLES="yes"
   - rvm: 1.9.3
     env: PUPPET_GEM_VERSION="3.8.7" STRICT_VARIABLES="yes" FUTURE_PARSER="yes"
-  - rvm: 2.1
-    env: STRICT_VARIABLES="yes"
-  - rvm: 2.2
-    env: STRICT_VARIABLES="yes"
-  - rvm: 2.3.1
-    env: STRICT_VARIABLES="yes"
+  - rvm: 2.1.9
+    env: PUPPET_GEM_VERSION="~> 4.0" STRICT_VARIABLES="yes"
+  - rvm: 2.3.4
+    env: PUPPET_GEM_VERSION="~> 4.0" STRICT_VARIABLES="yes"
 notifications:
   email: false
