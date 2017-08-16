@@ -9,14 +9,13 @@ group :development, :unit_tests do
   gem 'parallel_tests', "~> 2.9.0",                                :require => false
   gem 'rspec-puppet-facts',                                        :require => false
   gem 'puppetlabs_spec_helper',                                    :require => false
-  gem 'puppet-lint', "1.0.1",                                      :require => false
+  gem 'puppet-lint',                                               :require => false
   gem 'puppet-syntax',                                             :require => false
   gem 'metadata-json-lint', "~> 1.1.0",                            :require => false
   gem 'puppet-blacksmith',                                         :require => false
   gem 'mime-types', "~> 2.99",                                     :require => false if RUBY_VERSION < '2.0.0'
   gem 'rspec-puppet-utils',                                        :require => false
   gem 'puppet-lint-absolute_classname-check',                      :require => false
-  gem 'puppet-lint-appends-check',                                 :require => false
   gem 'puppet-lint-empty_string-check',                            :require => false
   gem 'puppet-lint-file_ensure-check',                             :require => false
   gem 'puppet-lint-leading_zero-check',                            :require => false
