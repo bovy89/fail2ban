@@ -17,7 +17,7 @@ describe 'fail2ban', :type => :class do
 "
         end
         it { is_expected.to create_class('fail2ban') }
-        it { is_expected.to compile }
+        it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_package('fail2ban').with(
           :ensure  => 'present',
           :require => nil,
@@ -53,13 +53,16 @@ logtarget = /var/log/fail2ban.log
         it { is_expected.to contain_file('/etc/fail2ban/fail2ban.local').with_content(expected) }
       end
 
-      describe 'with use_epel => true' do
-        let(:params) { { :use_epel => true } }
-        it { is_expected.to contain_package('fail2ban').with(
-          :ensure  => 'present',
-          :require => 'Class[Epel]',
-        )}
-      end
+      # describe 'with use_epel => true' do
+      #   let(:params) { { :use_epel => true } }
+      #   it do
+      #     expect {
+      #       is_expected.to contain_package('fail2ban').with(
+      #     :ensure  => 'present',
+      #     :require => 'Class[Epel]',
+      #   )}.to raise_error(Puppet::Error)
+      #   end
+      # end
 
       describe 'with service_ensure => stopped' do
         let(:params) { { :service_ensure => 'stopped' } }
