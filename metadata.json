@@ -1,6 +1,6 @@
 {
   "name": "bovy89-fail2ban",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "bovy89",
   "summary": "This module manages fail2ban",
   "license": "Apache-2.0",

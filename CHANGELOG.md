@@ -1,5 +1,13 @@
 # Change Log
 
+## [v1.0.1](https://github.com/bovy89/fail2ban/tree/v1.0.1) (2017-09-08)
+[Full Changelog](https://github.com/bovy89/fail2ban/compare/v1.0.0...v1.0.1)
+
+**Merged pull requests:**
+
+- puppet 5 support [\#2](https://github.com/bovy89/fail2ban/pull/2) ([bovy89](https://github.com/bovy89))
+- fix CI setup [\#1](https://github.com/bovy89/fail2ban/pull/1) ([bovy89](https://github.com/bovy89))
+
 ## [v1.0.0](https://github.com/bovy89/fail2ban/tree/v1.0.0) (2017-05-23)
 
 
