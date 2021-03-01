@@ -11,8 +11,16 @@ after = <%= @filterafter %>
 
 [Definition]
 
+<% if @filterfailregex != [] -%>
 failregex = <%= @filterfailregex.join("\n\t") %>
+<% else -%>
+failregex =
+<% end -%>
+<% if @filterignoreregex != [] -%>
 ignoreregex = <%= @filterignoreregex.join("\n\t") %>
+<% else -%>
+ignoreregex =
+<% end -%>
 
 <% if @filterdefinitionvars != [] -%>
 <%= @filterdefinitionvars.join("\n") %>

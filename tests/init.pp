@@ -10,9 +10,9 @@
 # http://docs.puppetlabs.com/guides/tests_smoke.html
 #
 
-include ::fail2ban
+include fail2ban
 
-class { '::fail2ban':
+class { 'fail2ban':
     jails_config => 'concat',
     mailto       => 'admin@example.com',
     ignoreip     => ['127.0.0.1/8', '192.168.6.0/24'],
@@ -26,19 +26,16 @@ fail2ban::jail { 'sshd':
     action => '%(action_)s',
 }
 
-
-class { '::fail2ban':
+class { 'fail2ban':
   service_ensure => 'stopped',
   disableboot    => true,
 }
 
-
-class { '::fail2ban':
+class { 'fail2ban':
   fail2ban_ensure => 'absent',
 }
 
-
-fail2ban::action {'sendmail-common':
+fail2ban::action { 'sendmail-common':
     actionstart => [' '],
     actionstop  => [' '],
 }

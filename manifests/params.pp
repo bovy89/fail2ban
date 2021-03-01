@@ -4,7 +4,6 @@
 #
 #
 class fail2ban::params {
-
   $package_name           = 'fail2ban'
   $service_name           = 'fail2ban'
   $config_dir             = '/etc/fail2ban'
@@ -34,7 +33,7 @@ class fail2ban::params {
   $default_findtime       = '600'
   $default_maxretry       = '5'
   $backend                = 'auto'
-  $mailto                 = "hostmaster@${::domain}"
+  $mailto                 = "hostmaster@${facts['networking']['domain']}"
   $banaction              = 'iptables-multiport'
   $mta                    = 'sendmail'
   $default_jails_protocol = 'tcp'
@@ -43,12 +42,10 @@ class fail2ban::params {
   $log_level              = undef
   $log_target             = undef
 
-
-  case $::osfamily {
-      'RedHat': {}
-      default: {
-          fail("Unsupported platform: ${::osfamily}/${::operatingsystem}")
-      }
+  case $facts['os']['family'] {
+    'RedHat': {}
+    default: {
+      fail("Unsupported platform: ${facts['os']['family']}/${facts['os']['name']}")
+    }
   }
-
 }

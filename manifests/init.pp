@@ -155,66 +155,59 @@
 #   Default: undef
 #
 class fail2ban (
-  $package_name           = $::fail2ban::params::package_name,
-  $service_name           = $::fail2ban::params::service_name,
-  $config_dir             = $::fail2ban::params::config_dir,
-  $config_file            = $::fail2ban::params::config_file,
-  $config_file_mode       = $::fail2ban::params::config_file_mode,
-  $config_file_owner      = $::fail2ban::params::config_file_owner,
-  $config_file_group      = $::fail2ban::params::config_file_group,
-  $config_file_template   = $::fail2ban::params::config_file_template,
-  $disableboot            = $::fail2ban::params::disableboot,
-  $service_autorestart    = $::fail2ban::params::service_autorestart,
-  $fail2ban_ensure        = $::fail2ban::params::fail2ban_ensure,
-  $service_ensure         = $::fail2ban::params::service_ensure,
-  $source_dir             = $::fail2ban::params::source_dir,
-  $source_dir_owner       = $::fail2ban::params::source_dir_owner,
-  $source_dir_group       = $::fail2ban::params::source_dir_group,
-  $source_dir_purge       = $::fail2ban::params::source_dir_purge,
-  $jails_config           = $::fail2ban::params::jails_config,
-  $jails_file             = $::fail2ban::params::jails_file,
-  $jails_file_mode        = $::fail2ban::params::jails_file_mode,
-  $jails_file_owner       = $::fail2ban::params::jails_file_owner,
-  $jails_file_group       = $::fail2ban::params::jails_file_group,
-  $jails_content          = $::fail2ban::params::jails_content,
-  $jails_template_header  = $::fail2ban::params::jails_template_header,
-  $jails_template_footer  = $::fail2ban::params::jails_template_footer,
-  $default_ignoreip       = $::fail2ban::params::default_ignoreip,
-  $default_bantime        = $::fail2ban::params::default_bantime,
-  $default_findtime       = $::fail2ban::params::default_findtime,
-  $default_maxretry       = $::fail2ban::params::default_maxretry,
-  $backend                = $::fail2ban::params::backend,
-  $mailto                 = $::fail2ban::params::mailto,
-  $banaction              = $::fail2ban::params::banaction,
-  $mta                    = $::fail2ban::params::mta,
-  $default_jails_protocol = $::fail2ban::params::default_jails_protocol,
-  $jails_chain            = $::fail2ban::params::jails_chain,
-  $use_epel               = $::fail2ban::params::use_epel,
-  $log_level              = $::fail2ban::params::log_level,
-  $log_target             = $::fail2ban::params::log_target,
+  $package_name = $fail2ban::params::package_name,
+  $service_name = $fail2ban::params::service_name,
+  $config_dir = $fail2ban::params::config_dir,
+  $config_file = $fail2ban::params::config_file,
+  $config_file_mode = $fail2ban::params::config_file_mode,
+  $config_file_owner = $fail2ban::params::config_file_owner,
+  $config_file_group = $fail2ban::params::config_file_group,
+  $config_file_template = $fail2ban::params::config_file_template,
+  Boolean $disableboot = $fail2ban::params::disableboot,
+  Boolean $service_autorestart = $fail2ban::params::service_autorestart,
+  Enum['present', 'absent'] $fail2ban_ensure = $fail2ban::params::fail2ban_ensure,
+  Enum['running', 'stopped'] $service_ensure = $fail2ban::params::service_ensure,
+  $source_dir = $fail2ban::params::source_dir,
+  $source_dir_owner = $fail2ban::params::source_dir_owner,
+  $source_dir_group = $fail2ban::params::source_dir_group,
+  Boolean $source_dir_purge = $fail2ban::params::source_dir_purge,
+  $jails_config = $fail2ban::params::jails_config,
+  $jails_file = $fail2ban::params::jails_file,
+  $jails_file_mode = $fail2ban::params::jails_file_mode,
+  $jails_file_owner = $fail2ban::params::jails_file_owner,
+  $jails_file_group = $fail2ban::params::jails_file_group,
+  $jails_content = $fail2ban::params::jails_content,
+  $jails_template_header = $fail2ban::params::jails_template_header,
+  $jails_template_footer = $fail2ban::params::jails_template_footer,
+  Array $default_ignoreip = $fail2ban::params::default_ignoreip,
+  $default_bantime = $fail2ban::params::default_bantime,
+  $default_findtime = $fail2ban::params::default_findtime,
+  $default_maxretry = $fail2ban::params::default_maxretry,
+  $backend = $fail2ban::params::backend,
+  $mailto = $fail2ban::params::mailto,
+  $banaction = $fail2ban::params::banaction,
+  $mta = $fail2ban::params::mta,
+  $default_jails_protocol = $fail2ban::params::default_jails_protocol,
+  $jails_chain = $fail2ban::params::jails_chain,
+  Boolean $use_epel = $fail2ban::params::use_epel,
+  $log_level = $fail2ban::params::log_level,
+  $log_target = $fail2ban::params::log_target,
 ) inherits fail2ban::params {
-
-
-  validate_bool($disableboot, $service_autorestart, $source_dir_purge, $use_epel)
-  validate_re($fail2ban_ensure, '^(present|absent)$', "${fail2ban_ensure} is not supported for fail2ban_ensure.")
-  validate_re($service_ensure, '^(running|stopped)$', "${service_ensure} is not supported for service_ensure.")
-  validate_array($default_ignoreip)
-
   if $fail2ban_ensure == 'absent' {
     $manage_file = 'absent'
-  }else{
+  } else {
     $manage_file = 'present'
   }
 
   if $disableboot {
     $manage_service_enable = false
-  }else{
+  } else {
     $manage_service_enable = true
   }
 
   if $service_autorestart {
     $manage_service_autorestart = Service[$service_name]
-  }else{
+  } else {
     $manage_service_autorestart =  undef
   }
 
@@ -271,9 +264,8 @@ class fail2ban (
         require => Package[$package_name],
         notify  => $manage_service_autorestart,
       }
-    }else{
+    } else {
       fail('jails_config => file without content and with fail2ban_ensure => present')
     }
   }
-
 }

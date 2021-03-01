@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-
-describe 'fail2ban::action', :type => :define do
+describe 'fail2ban::action', type: :define do
   let(:title) { 'myaction' }
   let(:pre_condition) { 'include ::fail2ban' }
 
@@ -14,11 +13,11 @@ describe 'fail2ban::action', :type => :define do
       describe 'action with all default' do
         let(:params) do
           {
-            :actionname => 'actionname',
+            actionname: 'actionname',
           }
         end
         let(:expected) do
-"# This file is managed by Puppet. DO NOT EDIT.
+          "# This file is managed by Puppet. DO NOT EDIT.
 #
 [INCLUDES]
 
@@ -29,25 +28,26 @@ describe 'fail2ban::action', :type => :define do
 [Init]
 "
         end
+
         it { is_expected.to contain_file("#{params[:actionname]}.local").with_content(expected) }
       end
 
       describe 'action with all parameters' do
         let(:params) do
-        {
-          :actionname     => 'actionname',
-          :actionstart    => ['actionstart'],
-          :actionstop     => ['actionstop'],
-          :actioncheck    => ['actioncheck'],
-          :actionban      => ['first_ban_action','second_ban_action','complex[ban]'],
-          :actionunban    => ['actionunban'],
-          :actioninitvars => ['a = 1','b = 2', 'not c'],
-          :actionbefore   => 'actionbefore',
-          :actionafter    => 'actionafter',
-        }
+          {
+            actionname: 'actionname',
+            actionstart: ['actionstart'],
+            actionstop: ['actionstop'],
+            actioncheck: ['actioncheck'],
+            actionban: ['first_ban_action', 'second_ban_action', 'complex[ban]'],
+            actionunban: ['actionunban'],
+            actioninitvars: ['a = 1', 'b = 2', 'not c'],
+            actionbefore: 'actionbefore',
+            actionafter: 'actionafter',
+          }
         end
         let(:expected) do
-"# This file is managed by Puppet. DO NOT EDIT.
+          "# This file is managed by Puppet. DO NOT EDIT.
 #
 [INCLUDES]
 
@@ -70,6 +70,7 @@ b = 2
 not c
 "
         end
+
         it { is_expected.to contain_file("#{params[:actionname]}.local").with_content(expected) }
       end
     end

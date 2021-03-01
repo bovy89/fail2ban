@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-
-describe 'fail2ban::filter', :type => :define do
+describe 'fail2ban::filter', type: :define do
   let(:title) { 'myfilter' }
   let(:pre_condition) { 'include ::fail2ban' }
 
@@ -14,39 +13,40 @@ describe 'fail2ban::filter', :type => :define do
       describe 'filter with all default' do
         let(:params) do
           {
-            :filtername => 'filtername',
+            filtername: 'filtername',
           }
         end
         let(:expected) do
-"# This file is managed by Puppet. DO NOT EDIT.
+          "# This file is managed by Puppet. DO NOT EDIT.
 #
 [INCLUDES]
 
 
 [Definition]
 
-failregex = 
-ignoreregex = 
+failregex =
+ignoreregex =
 
 
 "
         end
+
         it { is_expected.to contain_file("#{params[:filtername]}.local").with_content(expected) }
       end
 
       describe 'filter with all parameters' do
         let(:params) do
-         {
-           :filtername           => 'filtername',
-           :filterfailregex      => ['first_fail_regex','second_fail_regex','complex[filter]'],
-           :filterignoreregex    => ['now_ignore'],
-           :filterdefinitionvars => ['a = 1','b = 2', 'not c'],
-           :filterbefore         => 'add_before',
-           :filterafter          => 'add_after',
-         }
+          {
+            filtername: 'filtername',
+            filterfailregex: ['first_fail_regex', 'second_fail_regex', 'complex[filter]'],
+            filterignoreregex: ['now_ignore'],
+            filterdefinitionvars: ['a = 1', 'b = 2', 'not c'],
+            filterbefore: 'add_before',
+            filterafter: 'add_after',
+          }
         end
         let(:expected) do
-"# This file is managed by Puppet. DO NOT EDIT.
+          "# This file is managed by Puppet. DO NOT EDIT.
 #
 [INCLUDES]
 
@@ -66,6 +66,7 @@ not c
 
 "
         end
+
         it { is_expected.to contain_file("#{params[:filtername]}.local").with_content(expected) }
       end
     end

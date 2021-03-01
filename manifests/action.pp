@@ -48,28 +48,23 @@
 #   Default: fail2ban/action.local.erb
 #
 define fail2ban::action (
-  $action_ensure  = 'present',
-  $actionname     = $title,
-  $actionstart    = [],
-  $actionstop     = [],
-  $actioncheck    = [],
-  $actionban      = [],
-  $actionunban    = [],
-  $actioninitvars = [],
-  $actionbefore   = undef,
-  $actionafter    = undef,
+  Enum['present', 'absent'] $action_ensure = 'present',
+  $actionname = $title,
+  Array $actionstart = [],
+  Array $actionstop = [],
+  Array $actioncheck = [],
+  Array $actionban = [],
+  Array $actionunban = [],
+  Array $actioninitvars = [],
+  $actionbefore = undef,
+  $actionafter = undef,
   $actiontemplate = 'fail2ban/action.local.erb',
 ) {
-
   if ! defined(Class['fail2ban']) {
-      fail('You must include the fail2ban base class before define an action')
+    fail('You must include the fail2ban base class before define an action')
   }
 
-  validate_array($actionstart, $actionstop, $actioncheck, $actionban, $actionunban, $actioninitvars)
-  validate_re($action_ensure, '^(present|absent)$', "${action_ensure} is not supported for action_ensure.")
-
   $action_file = "${fail2ban::config_dir}/action.d/${actionname}.local"
-
 
   file { "${actionname}.local":
     ensure  => $action_ensure,
@@ -81,5 +76,4 @@ define fail2ban::action (
     require => Package[$fail2ban::package_name],
     notify  => $fail2ban::manage_service_autorestart,
   }
-
 }

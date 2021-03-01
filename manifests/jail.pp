@@ -56,26 +56,23 @@
 #   Default: undef
 #
 define fail2ban::jail (
-  $jail_ensure    = 'present',
-  $jailname       = $title,
-  $order          = '50',
-  $status         = undef,
-  $filter         = $title,
-  $ignoreip       = [],
-  $port           = [],
+  $jail_ensure = 'present',
+  $jailname = $title,
+  $order = '50',
+  $status = undef,
+  $filter = $title,
+  Array $ignoreip = [],
+  Array $port = [],
   $jails_protocol = undef,
-  $action         = [],
-  $logpath        = [],
-  $maxretry       = undef,
-  $bantime        = undef,
-  $findtime       = undef,
+  Array $action = [],
+  Array $logpath = [],
+  $maxretry = undef,
+  $bantime = undef,
+  $findtime = undef,
 ) {
-
   if ! defined(Class['fail2ban']) {
-      fail('You must include the fail2ban base class before define a jail')
+    fail('You must include the fail2ban base class before define a jail')
   }
-
-  validate_array($ignoreip, $port, $action, $logpath)
 
   $real_status = $status ? {
     '/(?i:disabled)/' => false,
@@ -93,14 +90,14 @@ define fail2ban::jail (
       require => Package[$fail2ban::package_name],
     }
 
-    concat::fragment{ 'fail2ban_jails_header':
+    concat::fragment { 'fail2ban_jails_header':
       target  => $fail2ban::jails_file,
       content => template($fail2ban::jails_template_header),
       order   => '01',
       notify  => $fail2ban::manage_service_autorestart,
     }
 
-    concat::fragment{ 'fail2ban_jails_footer':
+    concat::fragment { 'fail2ban_jails_footer':
       target  => $fail2ban::jails_file,
       content => template($fail2ban::jails_template_footer),
       order   => '99',
@@ -108,7 +105,7 @@ define fail2ban::jail (
     }
   }
 
-  concat::fragment{ "fail2ban_jail_${title}":
+  concat::fragment { "fail2ban_jail_${title}":
     target  => $fail2ban::jails_file,
     content => template('fail2ban/concat/jail.local-stanza.erb'),
     order   => $order,

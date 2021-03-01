@@ -36,22 +36,18 @@
 #   Default: fail2ban/filter.local.erb
 #
 define fail2ban::filter (
-  $filter_ensure        = 'present',
-  $filtername           = $title,
-  $filterfailregex      = [],
-  $filterignoreregex    = [],
-  $filterdefinitionvars = [],
-  $filterbefore         = undef,
-  $filterafter          = undef,
-  $filtertemplate       = 'fail2ban/filter.local.erb',
+  Enum['present', 'absent'] $filter_ensure = 'present',
+  $filtername = $title,
+  Array $filterfailregex = [],
+  Array $filterignoreregex = [],
+  Array $filterdefinitionvars = [],
+  $filterbefore = undef,
+  $filterafter = undef,
+  $filtertemplate = 'fail2ban/filter.local.erb',
 ) {
-
   if ! defined(Class['fail2ban']) {
-      fail('You must include the fail2ban base class before define a filter')
+    fail('You must include the fail2ban base class before define a filter')
   }
-
-  validate_array($filterfailregex, $filterignoreregex, $filterdefinitionvars)
-  validate_re($filter_ensure, '^(present|absent)$', "${filter_ensure} is not supported for filter_ensure.")
 
   $filter_file = "${fail2ban::config_dir}/filter.d/${filtername}.local"
 
@@ -65,5 +61,4 @@ define fail2ban::filter (
     require => Package[$fail2ban::package_name],
     notify  => $fail2ban::manage_service_autorestart,
   }
-
 }
